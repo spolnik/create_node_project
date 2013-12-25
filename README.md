@@ -1,4 +1,4 @@
-create_common_node_proj_structure
+create_node_project
 =================================
 
 Create common Node.js project structure
