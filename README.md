@@ -5,19 +5,30 @@ Create common Node.js project structure.
 
 Structure:
 ```
---lib/
---public/
-----javascripts/
-----css/
-------styles.css
-----index.html
---server.js
+* lib/
+* public/
+** javascripts/
+** css/
+*** styles.css
+** index.html
+* server.js
 ```
 
 ***
 
+## Installation
+
+```bash
+$ npm install create-node-project
+```
+
 To run:
-> node create_node_project.js <dir> (dir is optional argument)
+
+```bash
+$ node node_modules/create_node_project.js [destination dir]
+```
 
 To clean existing structure (having in mind, no additional files are put into the directories)
-> node create_node_project.js -clean
+```bash
+$ node node_modules/create_node_project.js -clean
+```
