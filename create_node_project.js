@@ -88,13 +88,14 @@ function createNewProject() {
     });
 }
 
-if (process.argv[2] === '-clean') {
+var args = process.argv.splice(2);
+var mode = args.shift();
+
+if (mode === '-clean') {
     cleanup();
 } else {
-    var newCurrentDir = process.argv[2];
-
-    if (newCurrentDir) {
-        process.chdir(newCurrentDir);
+    if (mode) {
+        process.chdir(mode);
     }
 
     createNewProject();

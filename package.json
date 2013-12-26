@@ -1,6 +1,6 @@
 {
     "name": "create-node-project",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "Create common Node.js project structure",
     "author": "Jacek Spolnik",
     "keywords": [
