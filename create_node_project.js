@@ -26,31 +26,76 @@ var logStatus = function (err, file_name, callback) {
     }
 };
 
-fs.mkdir("lib", function (err) {
-    logStatus(err, 'lib/');
-});
+var cleanup = function() {
+    var cleanDirSync = function(dirName) {
+        if (fs.existsSync(dirName)) {
+            fs.rmdirSync(dirName);
+            console.log(dirName + '/: REMOVED');
+        }
+    };
 
-fs.writeFile('server.js', serverJsTemplate, function (err) {
-    logStatus(err, 'server.js');
-});
+    var cleanFileSync = function(fileName) {
+        if (fs.existsSync(fileName)) {
+            fs.unlinkSync(fileName);
+            console.log(fileName + ': REMOVED')
+        }
+    };
 
-fs.mkdir("public", function (err) {
-    logStatus(err, 'public/', function () {
-        fs.writeFile('public/index.html', htmlTemplate, function (err) {
-            logStatus(err, 'public/index.html');
-        });
+    cleanDirSync('lib');
+    cleanFileSync('server.js');
 
-        fs.mkdir("public/javascripts", function (err) {
-            logStatus(err, 'public/javascripts/');
-        });
+    if (fs.existsSync('public')) {
+        cleanDirSync('public/javascripts');
+        cleanFileSync('public/index.html');
 
-        fs.mkdir("public/css", function (err) {
-            logStatus(err, 'public/css/', function () {
-                fs.open('public/css/style.css', 'w', function (err) {
-                    logStatus(err, 'public/css/style.css');
+        if (fs.existsSync('public/css')) {
+            cleanFileSync('public/css/style.css');
+            cleanDirSync('public/css');
+        }
+
+        cleanDirSync('public');
+    }
+};
+
+function createNewProject() {
+    fs.mkdir("lib", function (err) {
+        logStatus(err, 'lib/');
+    });
+
+    fs.writeFile('server.js', serverJsTemplate, function (err) {
+        logStatus(err, 'server.js');
+    });
+
+    fs.mkdir("public", function (err) {
+        logStatus(err, 'public/', function () {
+            fs.writeFile('public/index.html', htmlTemplate, function (err) {
+                logStatus(err, 'public/index.html');
+            });
+
+            fs.mkdir("public/javascripts", function (err) {
+                logStatus(err, 'public/javascripts/');
+            });
+
+            fs.mkdir("public/css", function (err) {
+                logStatus(err, 'public/css/', function () {
+                    fs.open('public/css/style.css', 'w', function (err) {
+                        logStatus(err, 'public/css/style.css');
+                    });
                 });
             });
-        });
 
+        });
     });
-});
+}
+
+if (process.argv[2] === '-clean') {
+    cleanup();
+} else {
+    var newCurrentDir = process.argv[2];
+
+    if (newCurrentDir) {
+        process.chdir(newCurrentDir);
+    }
+
+    createNewProject();
+}
