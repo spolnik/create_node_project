@@ -25,10 +25,10 @@ $ npm install create-node-project
 To run:
 
 ```bash
-$ node node_modules/create_node_project.js [destination dir]
+$ node node_modules/create_node_project/index.js [destination dir]
 ```
 
 To clean existing structure (having in mind, no additional files are put into the directories)
 ```bash
-$ node node_modules/create_node_project.js -clean
+$ node node_modules/create_node_project/index.js -clean
 ```
